@@ -8,12 +8,10 @@ import Upload from './Upload'
 export default function Header() {
 
   return (
-    <div>
+    <div className=''>
           <EventProvider>
-            <NavBar/>
             <Home/>
           </EventProvider>
-       
     </div>
   )
 }

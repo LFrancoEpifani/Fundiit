@@ -33,7 +33,13 @@ i18n
             "upload": "Se ha publicado tu evento!",
             "delete": 'Eliminar evento',
             "edit": "Editar Evento",
-            "teatro": "Teatro"
+            "teatro": "Teatro",
+            "lenguage": "Idioma",
+            "home": "Inicio",
+            "events": "Eventos",
+            "user": "Usuario",
+            "creating": "Crear",
+            "close": "Cerrar sesión"
         }
       },
       es: {
@@ -63,7 +69,13 @@ i18n
             "upload": "Your event is published!",
             "delete": 'Delete event',
             "edit": "Edit Event",
-            "teatro": "Theater"
+            "teatro": "Theater",
+            "lenguage": "Lenguage",
+            "home": "Home",
+            "events": "Events",
+            "user": "User",
+            "creating": "Create",
+            "close": "Logout"
         }
       }
     },

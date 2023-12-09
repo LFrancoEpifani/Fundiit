@@ -4,6 +4,9 @@ import { EventContext } from '../../eventContext';
 import { deleteEvent } from "../../eventHelpers";
 import { useTranslation } from "react-i18next";
 import PublicationModal from "../PublicationModal/PublicationModal";
+import NavBar2 from "../NavBar/Navbar2";
+import { useAuth0 } from "@auth0/auth0-react";
+import F from '../../assets/FFun.png'
 
 
 export default function Card() {
@@ -14,7 +17,6 @@ export default function Card() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");
   const { events, setEvents } = useContext(EventContext);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [openMenuEventId, setOpenMenuEventId] = useState(null);
 
   
@@ -53,6 +55,8 @@ export default function Card() {
 
     return date1 - date2;
   };
+
+  const {user, isAuthenticated} = useAuth0();
   
   const toggleDropdown = (eventId) => {
     setOpenMenuEventId(prevEventId => prevEventId === eventId ? null : eventId);
@@ -62,19 +66,26 @@ export default function Card() {
     setSelectedEvent(event);
   };
 
-  // Función para cerrar el modal
   const closeEditModal = () => {
     setSelectedEvent(null);
   };
 
   return ( 
-    <div className="text-center bg-flyers">
-      <div>
-        <h2 className='calendar text-center my-4 text-2xl'>{t('calendar')}</h2>
+    <div className="text-center">
+      {isAuthenticated && (
+        <div className="flex items-center">
+          <img className="m-2 w-9 h-9 rounded-full border border-gray" src={user.picture} alt="" />
+        </div>
+      )}
+      <div className="bg-white fixed z-20 bottom-0 w-full">
+       < NavBar2/>
+      </div>
+      <div className="">
+        <h2 className='calendar text-center text-2xl mb-6 mx-12 xl:bg-black xl:bg-opacity-10 xl:border-none '>{t('calendar')}</h2>
       <div className="flex justify-center items-center gap-2">
         <input className="border-2 border-gray-300 h-9 pr-2 rounded-lg shadow-2xl xl:w-72" type="text" placeholder="Buscador..."/>
         <select
-  className="border-2 border-gray-300 py-1 px-2 shadow-2xl text-black rounded-md w-24 m-2"
+  className="border-2 border-gray-300 py-1 px-2 shadow-2xl text-black rounded-md w-24"
   value={categoriaSeleccionada}
   onChange={(e) => setCategoriaSeleccionada(e.target.value)}
 >
@@ -90,8 +101,7 @@ export default function Card() {
     </div>
       <div className="flex flex-wrap justify-center items-center">
      {events
-          .sort(compareEvents) // Ordenar los eventos
-          .filter(event => categoriaSeleccionada === "Todos" || event.category === categoriaSeleccionada)
+          .sort(compareEvents).filter(event => categoriaSeleccionada === "Todos" || event.category === categoriaSeleccionada)
           .map((event) => (
             <div key={event.id} className="card">
               <Icon onClick={() => setIsFlipped(!isFlipped)} className="flip-icon text-blue-900" icon="mi:switch" />
@@ -103,31 +113,41 @@ export default function Card() {
                   <div className="bg-black absolute bottom-0 w-full p-3 flex justify-center items-center rounded-b-md">
                     <h2 className="text-white font-bold uppercase text-center text-lg">{event.title}</h2>
                   </div>
-                  <Icon 
+                 {isAuthenticated && (
+                   <Icon 
                    onClick={() => toggleDropdown(event.id)}
                   className="absolute top-2 left-2 text-orange-900 bg-white w-5 h-9 rounded-full bg-opacity-80"
                   icon="mdi:dots-vertical" 
                 />
-                {openMenuEventId === event.id && (
-                   <div className="absolute left-3 top-10 w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
-                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                   <a href="#" className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
-                      <span className="flex flex-col">
-                      <button onClick={() => handleEditClick(event)}>
-                    {t('edit')}
-                </button>
-                      </span>
-                  </a>
-                       <a href="#" className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
-                           <span className="flex flex-col">
-                               <button onClick={() => handleDelete(event.id)}>
-                                    {t('delete')}
-                               </button>
-                           </span>
-                       </a>
-                   </div>
-               </div>
-                )}
+                 )}
+                
+                  {openMenuEventId === event.id && (
+                    <div className="absolute left-3 top-10 w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    <a href="#" className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
+                       <span className="flex justify-center items-center gap-2">
+                       <button onClick={() => handleEditClick(event)}>
+                     {t('edit')}
+                     </button>
+                       </span>
+                   </a>
+                        <a href="#" className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
+                            <span className="flex justify-center items-center gap-2">
+                                <button onClick={() => handleDelete(event)}>
+                                     {t('delete')}
+                                </button>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                 )}
+    {selectedEvent && (
+        <PublicationModal 
+          setOpenPublicationModal={closeEditModal} 
+          event={selectedEvent} 
+          closeEditModal={() => setSelectedEvent(null)}
+        />
+      )}
                 </div>
                 <div
                 onClick={() => setIsFlipped(!isFlipped)}
@@ -173,13 +193,6 @@ export default function Card() {
             </div>
           ))}
       </div>
-      {selectedEvent && (
-        <PublicationModal 
-          setOpenPublicationModal={closeEditModal} 
-          event={selectedEvent} 
-          closeEditModal={() => setSelectedEvent(null)}
-        />
-      )}
     </div>
     
   );

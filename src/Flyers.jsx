@@ -9,9 +9,8 @@ export default function Flyers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div>
+    <div className='bg-flyers h-screen'>
         <EventProvider>
-          <NavBar/>
           <Card/>
           {isModalOpen && (
             <PublicationModal setIsModalOpen={() => setIsModalOpen(true)}/>

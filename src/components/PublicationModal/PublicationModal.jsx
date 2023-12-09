@@ -91,7 +91,7 @@ export default function PublicationModal({ setOpenPublicationModal, event }) {
 
   return (
     <div className="fixed inset-0 bg-gray-500 flex justify-center items-center z-10">
-    <div className="relative rounded-lg shadow-2xl w-full h-full bg-white flex">
+    <div className="relative shadow-2xl w-full h-full bg-white flex">
     {eventCreated && (
         <div className="absolute top-40 bg-green-200 border-green-600 text-green-600 border-l-4 p-4" role="alert">
           <p className="font-bold">
@@ -178,12 +178,12 @@ export default function PublicationModal({ setOpenPublicationModal, event }) {
                 onChange={handleInputChange}
                 className="w-32 h-10 rounded border-2 border-gray-200"
               >
-                <option className="" value="musica">Música</option>
-                <option className="" value="arte">Arte</option>
-                <option className="" value="alternativo">Alternativo</option>
-                <option className="" value="teatro">Teatro</option>
-                <option className="" value="baile">Baile</option>
-                <option className="" value="literatura">Literatura</option>
+                <option value="arte">Arte</option>
+                <option value="alternativo">Alternativo</option>
+                <option value="teatro">Teatro</option>
+                <option value="baile">Baile</option>
+                <option value="literatura">Literatura</option>
+                <option value="musica">Música</option>
               </select>
             </div>
             <div className="flex flex-col">

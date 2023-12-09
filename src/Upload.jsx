@@ -8,18 +8,21 @@ function Upload() {
 
     const { setImageUrls } = useContext(EventContext);
 
-    const handleClick = async () => {
-        if (!isUpload) {
-          return;
-        }
-      
+    const handleClick = () => {
         const imgRef = ref(imageDb, `files/uploads${v4()}`);
-        const snapshot = await uploadBytes(imgRef, isUpload);
-        const url = await getDownloadURL(snapshot.ref);
-      
-        // Actualiza formData con la URL de la imagen
-        setFormData(prevData => ({ ...prevData, urlImage: url }));
-      };
+        uploadBytes(imgRef, isUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                setImageUrls(prevUrls => {
+                    // Solo agrega la URL si aún no está en el estado
+                    if (!prevUrls.includes(url)) {
+                        return [...prevUrls, url];
+                      } else {
+                        return prevUrls;
+                    }
+                });
+            });
+        });
+    };
     
     useEffect(() => {
         listAll(ref(imageDb, 'files')).then(imgs => {

@@ -11,9 +11,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
 
-export default function NavBar() {
+export default function NavBar2() {
 
-  const {user, isAuthenticated, isLoading} = useAuth0();
+  const { isAuthenticated, isLoading} = useAuth0();
 
   if (isLoading) {
     <div>
@@ -37,32 +37,41 @@ export default function NavBar() {
   const [menuBurger, setMenuBurger] = useState(false);
   const [openPublicationModal, setOpenPublicationModal] = useState(false);
 
-  const hiddenBurger = () => {
-    setMenuBurger(!menuBurger);
-  };
-
   const {t} = useTranslation();
 
   return (
     <div className='bg-black bg-opacity-0'>
-      <div className="flex justify-between items-center px-4 py-2">
-        <Link to={"/"}>
-          <img className="w-9 h-11 mt-2" src={F} alt="" />
-        </Link>
-        {!menuBurger && ( // Muestra el botón solo si menuBurger es falso
-          <button onClick={hiddenBurger}>
-            <Icon className="text-3xl" icon="ic:baseline-menu" color="black"/>
-          </button>
-        )}  
+      <div className="flex justify-around items-center px-4 py-4">
+            <Link to={"/"} className="flex items-center">
+              <Icon className="w-6 h-6 xl:w-7 xl:h-7 mr-2" icon="lucide:home" />
+            </Link>
+            <Link to={"/flyers"} className="flex items-center">
+              <Icon className="w-6 h-6 xl:w-7 xl:h-7 mr-2" icon="ic:outline-event" />
+            </Link>
+            <button onClick={() => setOpenPublicationModal(true)} className="flex items-start">
+              <Icon className="w-6 h-6 xl:w-7 xl:h-7" icon="ph:plus-fill" />
+            </button>
+            <button onClick={() => changeLanguage(isLenguage ? "en" : "es")} className="flex items-center">
+              <Icon className="w-6 h-6 xl:w-7 xl:h-7" icon="tabler:world" />
+            </button>
+            {!isAuthenticated &&(
+              <button className="flex items-end justify-end">
+              <Login/>
+            </button>
+            )}
+             {isAuthenticated && (
+              <div>
+                <Logout/>
+              </div>
+            )}
+            
       </div>
 
   
       {menuBurger && (
         <div className="fixed top-0 left-0 h-full w-3/4 bg-white p-3 transition-all duration-300 z-20">
           <div className="flex flex-col items-start gap-3 font-bold my-6">
-            <button onClick={hiddenBurger}>
-            <Icon className="absolute top-3 right-3 text-2xl" icon="carbon:close-outline"/>
-            </button>
+            
               {!isAuthenticated && (
                 <div className="flex items-end justify-center gap-2">
                 <Icon className="w-9 h-9 bg-gray-400 rounded-full p-1" icon="pepicons-pencil:photo-camera-off" color="white" />
@@ -70,42 +79,14 @@ export default function NavBar() {
               </div>
               )}
 
-            {isAuthenticated &&(
-             <div className="flex items-end gap-2">
-               <img className="w-9 h-9 rounded-full" src={user.picture} alt={user.name} />
-                <p>{user.name}</p>
-             </div>
+            
 
-            )}
-
-            <Link to={"/"} className="my-4 flex items-center">
-              <Icon className="w-6 h-6 xl:w-7 xl:h-7 mr-2" icon="lucide:home" />
-              {t('home')}
-            </Link>
-            <Link to={"/flyers"} className="mb-4 flex items-center">
-              <Icon className="w-6 h-6 xl:w-7 xl:h-7 mr-2" icon="ic:outline-event" />
-              {t('events')}
-            </Link>
-            <button onClick={() => setOpenPublicationModal(true)} className="mb-4 flex items-center">
-              <Icon className="w-6 h-6 xl:w-7 xl:h-7 mr-2" icon="ph:plus-fill" />
-              {t('creating')}
-            </button>
-            <button onClick={() => changeLanguage(isLenguage ? "en" : "es")} className="mb-4 flex items-center">
-              <Icon className="w-6 h-6 xl:w-6 xl:h-6 mr-2" icon="tabler:world" />
-              {t('lenguage')}
-            </button>
-            {!isAuthenticated &&(
-              <div className="flex items-start justify-center">
-              <Login/>
-              {t('user')}
-            </div>
-            )}
-            {isAuthenticated && (
-              <div className="flex items-center justify-center absolute bottom-2">
-                <Logout/>
-                {t('close')}
-              </div>
-            )}
+            
+            
+            
+            
+            
+           
           </div>
         </div>
       )}
