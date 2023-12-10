@@ -21,7 +21,7 @@ i18n
             "dance": "Baile",
             "alternative": "Alternativo",
             "literature": "Literatura",
-            "all": "Todos",
+            "options": "Buscador...",
             "title": "Título",
             "description": "Descripción",
             "address": "Dirección",
@@ -37,7 +37,7 @@ i18n
             "lenguage": "Idioma",
             "home": "Inicio",
             "events": "Eventos",
-            "user": "Usuario",
+            "user": "Iniciar sesión",
             "creating": "Crear",
             "close": "Cerrar sesión"
         }
@@ -57,7 +57,7 @@ i18n
         "dance": "Dance",
         "alternative": "Alternative",
         "literature": "Literature",
-        "all": "All",
+        "options": "Serach...",
         "title": "Title",
         "description": "Description",
         "address": "Adress",
@@ -73,7 +73,7 @@ i18n
             "lenguage": "Lenguage",
             "home": "Home",
             "events": "Events",
-            "user": "User",
+            "user": "Login",
             "creating": "Create",
             "close": "Logout"
         }

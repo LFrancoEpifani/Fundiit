@@ -7,10 +7,10 @@ export default function Login() {
     const { loginWithRedirect } = useAuth0();
     
   return (
-    <div>
-        <button onClick={() => loginWithRedirect()}>
-            <Icon className="w-6 h-6 xl:w-7 xl:h-7" icon="mingcute:user-4-fill" />
-        </button>
-    </div>
+    <>
+   
+            <Icon onClick={() => loginWithRedirect()} className="w-6 h-6 xl:w-7 xl:h-7" icon="mingcute:user-4-fill" />
+   
+    </>
   )
 }

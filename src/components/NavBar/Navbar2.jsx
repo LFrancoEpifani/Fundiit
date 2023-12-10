@@ -37,11 +37,12 @@ export default function NavBar2() {
   const [menuBurger, setMenuBurger] = useState(false);
   const [openPublicationModal, setOpenPublicationModal] = useState(false);
 
+
   const {t} = useTranslation();
 
   return (
-    <div className='bg-black bg-opacity-0'>
-      <div className="flex justify-around items-center px-4 py-4">
+    <div className='from-black to-white'>
+      <div className="flex justify-around items-center px-4 py-6">
             <Link to={"/"} className="flex items-center">
               <Icon className="w-6 h-6 xl:w-7 xl:h-7 mr-2" icon="lucide:home" />
             </Link>

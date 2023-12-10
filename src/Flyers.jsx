@@ -9,7 +9,7 @@ export default function Flyers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className='bg-flyers h-screen'>
+    <div className='h-screen'>
         <EventProvider>
           <Card/>
           {isModalOpen && (

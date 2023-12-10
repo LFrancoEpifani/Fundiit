@@ -23,15 +23,6 @@ export default function Card() {
 
   const handleDelete = (id) => {
     deleteEvent(id)
-      .then(() => {
-        setEvents(currentEvents => currentEvents.filter(event => event.id !== id));
-        if (openMenuEventId === id) {
-          setOpenMenuEventId(null);
-        }
-      })
-      .catch(error => {
-        console.error("Error al eliminar el evento:", error);
-      });
   };
 
  
@@ -73,23 +64,22 @@ export default function Card() {
   return ( 
     <div className="text-center">
       {isAuthenticated && (
-        <div className="flex items-center">
-          <img className="m-2 w-9 h-9 rounded-full border border-gray" src={user.picture} alt="" />
+        <div className="flex items-center justify-between m-3 gap-1">
+          <img className="w-9 h-9 rounded-full border border-gray" src={user.picture} alt="" />
         </div>
       )}
       <div className="bg-white fixed z-20 bottom-0 w-full">
        < NavBar2/>
       </div>
       <div className="">
-        <h2 className='calendar text-center text-2xl mb-6 mx-12 xl:bg-black xl:bg-opacity-10 xl:border-none '>{t('calendar')}</h2>
-      <div className="flex justify-center items-center gap-2">
-        <input className="border-2 border-gray-300 h-9 pr-2 rounded-lg shadow-2xl xl:w-72" type="text" placeholder="Buscador..."/>
-        <select
-  className="border-2 border-gray-300 py-1 px-2 shadow-2xl text-black rounded-md w-24"
+      <Icon icon="mi:search" className={`text-xl text-gray-600${isAuthenticated ? " absolute top-89 right-22" : " absolute top-29 right-22"}`}/>
+<select className="custom-select my-4 border-2 border-gray-400 text-gray-600 h-11 w-95 rounded-full bg-opacity-90 px-3"
   value={categoriaSeleccionada}
-  onChange={(e) => setCategoriaSeleccionada(e.target.value)}
->
-  <option value="Todos">{t('all')}</option>
+  onChange={(e) => setCategoriaSeleccionada(e.target.value)}>
+    
+  <option value="Todos">
+    {t('options')}
+    </option>
   <option value="musica">{t('music')}</option>
   <option value="arte">{t('art')}</option>
   <option value="baile">{t('dance')}</option>
@@ -98,7 +88,9 @@ export default function Card() {
   <option value="teatro">{t('teatro')}</option>
 </select>
       </div>
-    </div>
+      <div>
+        <h2 className="text-2xl font-bold uppercase">Barcelona</h2>
+      </div>
       <div className="flex flex-wrap justify-center items-center">
      {events
           .sort(compareEvents).filter(event => categoriaSeleccionada === "Todos" || event.category === categoriaSeleccionada)
@@ -116,7 +108,7 @@ export default function Card() {
                  {isAuthenticated && (
                    <Icon 
                    onClick={() => toggleDropdown(event.id)}
-                  className="absolute top-2 left-2 text-orange-900 bg-white w-5 h-9 rounded-full bg-opacity-80"
+                  className="absolute top-8 left-8 text-orange-900 bg-white w-5 h-9 rounded-full bg-opacity-80"
                   icon="mdi:dots-vertical" 
                 />
                  )}
