@@ -13,6 +13,8 @@ body{
 }
 
 
+
+
 option{
     border: 0.1px solid grey;
     height: 11vh;
@@ -36,6 +38,25 @@ option{
 
 /* NAVBAR */
 
+.login{
+
+  color: #0000FF;
+  border-bottom: #0000FF solid 0.1px;
+}
+
+.register{
+  font-family: 'Nunito', sans-serif;  
+}
+
+.btn-iniciar-sesion{
+  font-family: 'Nunito', sans-serif;  
+  background-color: #1D407A;
+}
+
+
+.btn-swtich{
+  z-index: -1;
+}
 
 
 .logo{
@@ -69,7 +90,7 @@ option{
 }
 
 .bg-home{
-  background-color: #ffffff;
+  background-color: #fff;
   height: 100vh;
   width: 100%;
 }

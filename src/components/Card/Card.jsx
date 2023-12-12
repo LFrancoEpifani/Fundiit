@@ -1,15 +1,14 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { EventContext } from '../../eventContext';
 import { deleteEvent } from "../../eventHelpers";
 import { useTranslation } from "react-i18next";
 import PublicationModal from "../PublicationModal/PublicationModal";
 import NavBar2 from "../NavBar/Navbar2";
-import { useAuth0 } from "@auth0/auth0-react";
-import F from '../../assets/FFun.png'
 
 
-export default function Card() {
+
+export default function Card({token}) {
 
   const {t} = useTranslation();
 
@@ -18,14 +17,20 @@ export default function Card() {
   const { events, setEvents } = useContext(EventContext);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [openMenuEventId, setOpenMenuEventId] = useState(null);
-
   
-
-  const handleDelete = (id) => {
-    deleteEvent(id)
-  };
-
+  
+const handleDelete = (event) => {
+  deleteEvent(event)
+    .then(() => {
+      setEvents(currentEvents => currentEvents.filter(e => e.id !== event.id));
+      window.location.reload();
+    })
+    .catch(error => {
+      console.error('Error al borrar el evento:', error);
+    });
+};
  
+
   
   function formatDate(dateString) {
     const months = [
@@ -47,7 +52,7 @@ export default function Card() {
     return date1 - date2;
   };
 
-  const {user, isAuthenticated} = useAuth0();
+ 
   
   const toggleDropdown = (eventId) => {
     setOpenMenuEventId(prevEventId => prevEventId === eventId ? null : eventId);
@@ -63,39 +68,37 @@ export default function Card() {
 
   return ( 
     <div className="text-center">
-      {isAuthenticated && (
-        <div className="flex items-center justify-between m-3 gap-1">
-          <img className="w-9 h-9 rounded-full border border-gray" src={user.picture} alt="" />
-        </div>
-      )}
-      <div className="bg-white fixed z-20 bottom-0 w-full">
+      <div className="fixed z-20 bottom-0 w-full text-white">
        < NavBar2/>
       </div>
       <div className="">
-      <Icon icon="mi:search" className={`text-xl text-gray-600${isAuthenticated ? " absolute top-89 right-22" : " absolute top-29 right-22"}`}/>
-<select className="custom-select my-4 border-2 border-gray-400 text-gray-600 h-11 w-95 rounded-full bg-opacity-90 px-3"
+      <div className="flex items-center">
+      <Icon icon="mi:search" className="text-xl text-gray-600 absolute top-29 right-22"/>
+<select className="custom-select my-4 mx-2 border-2 border-gray-400 text-gray-600 h-11 w-95 m-auto rounded-full bg-opacity-90 px-3"
+
   value={categoriaSeleccionada}
   onChange={(e) => setCategoriaSeleccionada(e.target.value)}>
-    
   <option value="Todos">
     {t('options')}
     </option>
   <option value="musica">{t('music')}</option>
-  <option value="arte">{t('art')}</option>
   <option value="baile">{t('dance')}</option>
   <option value="literatura">{t('literature')}</option>
   <option value="alternativo">{t('alternative')}</option>
   <option value="teatro">{t('teatro')}</option>
+  <option value="arte">{t('art')}</option>
 </select>
+
+      </div>
       </div>
       <div>
-        <h2 className="text-2xl font-bold uppercase">Barcelona</h2>
+        <h2 className="text-2xl font-bold uppercase"></h2>
       </div>
       <div className="flex flex-wrap justify-center items-center">
      {events
           .sort(compareEvents).filter(event => categoriaSeleccionada === "Todos" || event.category === categoriaSeleccionada)
           .map((event) => (
-            <div key={event.id} className="card">
+            <div key={event.id} className="card z-10">
               <Icon onClick={() => setIsFlipped(!isFlipped)} className="flip-icon text-blue-900" icon="mi:switch" />
               <div className={`card-inner ${isFlipped ? "is-flipped" : ""}`}>
                 <div
@@ -105,14 +108,14 @@ export default function Card() {
                   <div className="bg-black absolute bottom-0 w-full p-3 flex justify-center items-center rounded-b-md">
                     <h2 className="text-white font-bold uppercase text-center text-lg">{event.title}</h2>
                   </div>
-                 {isAuthenticated && (
-                   <Icon 
-                   onClick={() => toggleDropdown(event.id)}
-                  className="absolute top-8 left-8 text-orange-900 bg-white w-5 h-9 rounded-full bg-opacity-80"
-                  icon="mdi:dots-vertical" 
-                />
-                 )}
+                 
                 
+                     <Icon 
+                     onClick={() => toggleDropdown(event.id)}
+                    className="absolute top-8 left-8 text-orange-900 bg-white w-5 h-9 rounded-full bg-opacity-80"
+                    icon="mdi:dots-vertical" 
+                  />
+                  
                   {openMenuEventId === event.id && (
                     <div className="absolute left-3 top-10 w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
@@ -125,7 +128,7 @@ export default function Card() {
                    </a>
                         <a href="#" className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
                             <span className="flex justify-center items-center gap-2">
-                                <button onClick={() => handleDelete(event)}>
+                                <button onClick={() => handleDelete(event.id)}>
                                      {t('delete')}
                                 </button>
                             </span>

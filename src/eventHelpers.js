@@ -8,20 +8,20 @@ export const fetchEvents = () => {
     });
 };
 
+
 export const deleteEvent = (id) => {
   return fetch(`http://localhost:4000/events/${id}`, {
     method: 'DELETE',
   })
   .then(response => {
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error(`Error deleting event: ${response.statusText}`);
     }
-    return response.json();
+    return id;
   })
-  .then(() => id)
   .catch((error) => {
     console.error('Error deleting event:', error);
-    throw error; // Propagate the error to handle it in the component
+    throw error; // Propaga el error para manejarlo en el componente
   });
 };
 
@@ -33,14 +33,9 @@ export const addEvent = (formData) => {
     },
     body: JSON.stringify(formData),
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
+  .then(response => response.json())
   .catch((error) => {
     console.error('Error adding event:', error);
-    throw error; // Propagate the error to handle it in the component
+    throw error; // Propaga el error para manejarlo en el componente
   });
 };
