@@ -81,14 +81,11 @@ export default function NavBar() {
               {t('lenguage')}
             </button>
            
-              <div className="flex items-start justify-center gap-1">
-              <Icon className="w-6 h-6 xl:w-6 xl:h-6 mr-2" icon="mingcute:user-4-fill" />
-              {t('user')}
-            </div>
+              
          
           
-              <div className="flex items-center justify-center absolute bottom-10">
-               
+              <div className="flex items-center justify-center gap-2 absolute bottom-10">
+                <Icon className="w-5 h-5" icon="mingcute:power-fill" color="red" />
                 {t('close')}
               </div>
            

@@ -66,15 +66,15 @@ const handleDelete = (event) => {
     setSelectedEvent(null);
   };
 
-  return ( 
-    <div className="text-center">
+  return (  
+    <div className="text-center bg-flyers">
       <div className="fixed z-20 bottom-0 w-full text-white">
        < NavBar2/>
       </div>
       <div className="">
       <div className="flex items-center">
-      <Icon icon="mi:search" className="text-xl text-gray-600 absolute top-29 right-22"/>
-<select className="custom-select my-4 mx-2 border-2 border-gray-400 text-gray-600 h-11 w-95 m-auto rounded-full bg-opacity-90 px-3"
+      <Icon icon="mi:search" className="text-xl text-gray-600 absolute top-28 right-28"/>
+<select className="custom-select indent-1 my-4 mx-2 shadow-xl border border-black text-gray-600 h-11 w-95 m-auto rounded-full bg-opacity-90 px-3"
 
   value={categoriaSeleccionada}
   onChange={(e) => setCategoriaSeleccionada(e.target.value)}>
@@ -117,21 +117,15 @@ const handleDelete = (event) => {
                   />
                   
                   {openMenuEventId === event.id && (
-                    <div className="absolute left-3 top-10 w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                    <div className="absolute left-10 top-30 w-56 mt-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <a href="#" className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
-                       <span className="flex justify-center items-center gap-2">
-                       <button onClick={() => handleEditClick(event)}>
-                     {t('edit')}
-                     </button>
-                       </span>
-                   </a>
-                        <a href="#" className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
-                            <span className="flex justify-center items-center gap-2">
-                                <button onClick={() => handleDelete(event.id)}>
+                        <a href="#" className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600" role="menuitem">
+                            <div className="flex justify-center items-center gap-2">
+                                <button  className="flex justify-center items-center gap-2" onClick={() => handleDelete(event.id)}>
                                      {t('delete')}
+                                     <Icon className="w-5 h-5" icon="ph:trash" color="red" />
                                 </button>
-                            </span>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -160,7 +154,7 @@ const handleDelete = (event) => {
                   </div>
                   <div className="flex justify-between m-4 text-md">
                     <p>{event.time}hs</p>
-                    <p className="capitalize" style={{ color: event.price === 0 ? 'inherit' : '' }}>
+                    <p className="capitalize" style={{ color: event.price === 0 ? '#16FF00' : '' }}>
                       {event.price === 0 ? 'Gratis' : `${event.price} €`}
                     </p>
                   </div>

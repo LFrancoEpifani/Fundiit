@@ -61,6 +61,7 @@ export default function Header() {
           }
         />
         <Route path='/flyers' element={<Flyers/>}/>
+        <Route path='/login' element={<Login/>}/>
         <Route path="/home" element={<Home token={loginData.token}/>} />
       </Routes>
 

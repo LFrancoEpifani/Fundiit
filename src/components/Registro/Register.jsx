@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import F from '../../assets/FFun.png'
 import {Icon} from '@iconify/react'
+import { useNavigate } from 'react-router-dom';
 
-export default function Register({ userData, setUserData, addUser, setUsers }) {
-
+export default function Register({ setUserData }) {
+  const [userData, setLocalUserData] = useState({ username: '', password: '', email: '' });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Crea una instancia de useNavigate
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => ({
+    setLocalUserData(prevData => ({
       ...prevData,
       [name]: value,
     }));
@@ -16,16 +18,10 @@ export default function Register({ userData, setUserData, addUser, setUsers }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
-    const { username, password, email } = userData;
-    
-    // Validaciones de campos
-    if (!username || !password || !email) {
-      console.error('Todos los campos son obligatorios');
-      return;
-    }
+    // ... Validaciones y solicitud ...
+
     try {
       const response = await fetch('http://localhost:4000/auth/register', {
         method: 'POST',
@@ -36,27 +32,26 @@ export default function Register({ userData, setUserData, addUser, setUsers }) {
       });
 
       if (response.ok) {
-        // Handle success, e.g., redirect to a success page
         console.log('User registered successfully!');
+        setLocalUserData({ username: '', password: '', email: '' });
+        setUserData({ username: '', password: '', email: '' });
+        navigate('/login'); // Asegúrate de que '/login' sea la ruta correcta para tu componente Login
       } else {
-        // Handle errors, e.g., display an error message
         console.error('Registration failed');
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
-      console.error('Detalles del error:', error.response); // Esto imprimirá el objeto de respuesta completo
-      console.log('Registration failed'); // Este mensaje se mostrará en la consola si la solicitud falla
+      // ... Manejo de errores ...
     }
 
     setLoading(false);
   };
-  
 
   return (
     <div>
-      <div className='flex justify-center items-center my-8'>
-          <img className='w-9 h-12' src={F} alt="" />
-        </div>
+      <div className='flex justify-center items-center my-8 bg-white'>
+        <img className='w-9 h-12' src={F} alt="" />
+      </div>
       <form onSubmit={handleSubmit} className=''>
         
         <h2 className='register text-center my-2 font-bold text-2xl'>REGISTRATE</h2>
@@ -90,7 +85,7 @@ export default function Register({ userData, setUserData, addUser, setUsers }) {
        </div>
         </div>
         <div className='font-normal bg-orange-500 shadow-xl text-white text-center border w-80 rounded-md p-2 m-auto mt-16 mb-4'>
-        <button className='tracking-wider '  type="submit">
+        <button className='tracking-wider' type="submit">
           REGISTRAR
         </button>
         </div>

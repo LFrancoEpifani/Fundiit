@@ -90,7 +90,7 @@ export default function PublicationModal({ setOpenPublicationModal, event }) {
 
 
   return (
-    <div className="fixed inset-0 bg-gray-500 flex justify-center items-center z-10">
+    <div className="fixed inset-0 bg-gray-500 flex justify-center items-center z-20">
     <div className="relative shadow-2xl w-full h-full bg-white flex">
     {eventCreated && (
         <div className="absolute top-40 bg-green-200 border-green-600 text-green-600 border-l-4 p-4" role="alert">
@@ -108,9 +108,9 @@ export default function PublicationModal({ setOpenPublicationModal, event }) {
           onClick={() => setOpenPublicationModal(false)}
           className="absolute top-0 right-0 m-2"
         >
-          <Icon className="text-3xl" icon="ic:baseline-close" />
+          <Icon className="text-3xl" icon="ic:baseline-close" color="black"/>
         </button>
-        <h2 className="font-bold text-center m-2 text-lg">{t('create')}</h2>
+        <h2 className="font-bold text-center m-2 text-lg text-black">{t('create')}</h2>
         <hr/>
         
         <form onSubmit={handleSubmit} className="uppercase formulario font-bold">
@@ -127,7 +127,7 @@ export default function PublicationModal({ setOpenPublicationModal, event }) {
               />
             </div>
             <div className="flex flex-col justify-center items-center">
-              <label className="m-2 sm:text-center">{t('adress')}</label>
+              <label className="m-2 sm:text-center">{t('address')}</label>
               <input
                 className="sm:w-40 p-2 w-72 h-10 rounded m-1 border-2 border-gray-200"
                 type="text"

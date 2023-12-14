@@ -51,7 +51,7 @@ export default function Home({token}) {
        <div className='bienvenida sm:my-1 sm:text-2xl xl:text-5xl xl:mb-8'>
        <h2>{t('explore')} <br/> {t('the')} <span className='text-blue-800 font-bold uppercase'>{t('experience')}</span> <br/>{t('found')} <br/>{t('click')}</h2>
        </div>
-        <div className='absolute xl:bottom-20 xl:left-20 sm:bottom-0 sm:left-60 flex gap-4 xl:justify-center xl:items-center'>
+        <div className='absolute xl:bottom-20 xl:left-20 sm:bottom-10 sm:left-51 flex gap-4 xl:justify-center xl:items-center'>
           <Link to={"/flyers"}>
           <button className='btn-search-event sm:py-2 sm:px-2 rounded text-md xl:w-56 xl:h-12 xl:text-xl'>
            {t('search')}

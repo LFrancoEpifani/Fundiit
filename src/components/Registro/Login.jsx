@@ -64,7 +64,7 @@ const Login = () => {
   
   
   return (
-    <div >
+    <div className='bg-white'>
       <div className='flex justify-center items-center my-8'>
           <img className='w-9 h-12' src={F} alt="" />
         </div>
