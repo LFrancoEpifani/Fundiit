@@ -1,4 +1,4 @@
-## React app
+## React app :computer:
 
 Fundit
 
